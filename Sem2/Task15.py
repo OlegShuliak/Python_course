@@ -18,9 +18,9 @@ minimum = weight
 
 for i in range(n - 1):
     weight = int(input("Введите массу арбуза: "))
-    if weight > maximum:
+    if weight > maximum:       # maximum = max(maximum, weight)
         maximum = weight
-    elif weight < minimum:
+    elif weight < minimum:     # minimum = min(minimum, weight)
         minimum = weight
 
 print(f"Арбуз Ивана Васильевича весит {maximum} кг, а тещи - {minimum} кг.")
