@@ -1,17 +1,4 @@
-# Создать телефонный справочник с
-# возможностью импорта и экспорта данных в
-# формате .txt. Фамилия, имя, отчество, номер
-# телефона - данные, которые должны находиться
-# в файле.
-# 1. Программа должна выводить данные
-# 2. Программа должна сохранять данные в
-# текстовом файле
-# 3. Пользователь может ввести одну из
-# характеристик для поиска определенной
-# записи(Например имя или фамилию
-# человека)
-# 4. Использование функций. Ваша программа
-# не должна быть линейной
+
 
 file_path = 'D:\\GeekBrains\\Python_course\\Sem8\\Spravochnik.txt'
 
@@ -36,11 +23,43 @@ def add_contact(fio, number):
         _data.write(';')
         _data.write(number)
 
+def modify_contact(name):
+    temp = []
+    with (open(file_path, 'r', encoding='utf-8')) as _data:
+        for line in _data:
+            temp.append(line)
+    for line in temp:
+         if name.lower() in line.lower():
+            print(line.replace(';', ' ').replace('\n', ''))
+            mod_fio = input('Измените ФИО через пробел: ')
+            mod_number = input('Измените номер: ')
+            temp.remove(line)
+            temp.append(f'{mod_fio} {mod_number}\n'.replace(' ', ';'))
+    with (open(file_path, 'w', encoding='utf-8')) as _data:
+        for line in temp:
+            _data.write(line)
+        
+def delete_contact(name):
+    temp = []
+    with (open(file_path, 'r', encoding='utf-8')) as _data:
+        for line in _data:
+            temp.append(line)
+    for line in temp:
+         if name.lower() in line.lower():
+            print(line.replace(';', ' ').replace('\n', ''))
+            print('Контакт удален')
+            temp.remove(line)
+    with (open(file_path, 'w', encoding='utf-8')) as _data:
+        for line in temp:
+            _data.write(line)
+
 def main():
-    print('Выберите действие:',
-          '1 - Показать справочник',
-          '2 - Найти контакт',
-          '3 - Добавить контакт')
+    print('Выберите действие:', '\n',
+          '1 - Показать справочник', '\n',
+          '2 - Найти контакт', '\n',
+          '3 - Добавить контакт', '\n',
+          '4 - Изменить контакт', '\n',
+          '5 - Удалить контакт')
     select = int(input())
     if select == 1:
         show_all_records()
@@ -51,6 +70,12 @@ def main():
         new_contact_fio = input('Введите ФИО через пробел: ')
         new_contact_number = input('Введите номер: ')
         add_contact(new_contact_fio, new_contact_number)
+    elif select == 4:
+        mod_name = input('Введите фамилию контакта, который хотите изменить: ')
+        modify_contact(mod_name)
+    elif select == 5:
+        del_name = input('Введите фамилию контакта, который хотите удалить: ')
+        delete_contact(del_name)
 
 main()
 
